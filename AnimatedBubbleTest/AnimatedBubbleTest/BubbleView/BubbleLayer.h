@@ -24,6 +24,10 @@ struct CGSquare{
 
 @property(nonatomic,assign)CGFloat scaleRatio;
 
+
+@property(nonatomic,strong)NSArray *durations;
+
+
 - (void)setDesPoint:(CGPoint)desPoint;
 
 @end

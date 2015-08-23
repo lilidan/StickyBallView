@@ -36,6 +36,7 @@
         _factor2 = 0;
         _scaleRatio = 0.6;
         _bubbleSize = 100;
+        _durations = @[@(0.6),@(0.8),@(0.3)];
     }
     return self;
 }
@@ -67,6 +68,7 @@
         self.factor2 = layer.factor2;
         self.angle = layer.angle;
         self.color = layer.color;
+        self.durations = layer.durations;
     }
     return self;
 }
@@ -138,19 +140,17 @@
 
 -(void)triggleAnimation{
     //Spring animation
-    CAKeyframeAnimation *anim = [[KYSpringLayerAnimation sharedAnimManager]createSpringAnima:@"factor1" duration:1.0 usingSpringWithDamping:0.5 initialSpringVelocity:3 fromValue:@(0) toValue:@(1 - self.scaleRatio)];
+    CAKeyframeAnimation *anim = [[KYSpringLayerAnimation sharedAnimManager]createSpringAnima:@"factor1" duration:[self.durations[0] floatValue] usingSpringWithDamping:0.5 initialSpringVelocity:3 fromValue:@(0) toValue:@(1 - self.scaleRatio)];
     anim.removedOnCompletion = YES;
-    anim.delegate = self;
     self.factor1 = 1 - self.scaleRatio;
     [self addAnimation:anim forKey:@"triggleAnimation"];
-    [self performSelector:@selector(restoreAnimation) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(roundAnimation) withObject:nil afterDelay:[self.durations[2] floatValue]];
 }
 
--(void)restoreAnimation{
+-(void)roundAnimation{
     
     //Spring animation
-    CAKeyframeAnimation *anim = [[KYSpringLayerAnimation sharedAnimManager]createSpringAnima:@"factor2" duration:0.8 usingSpringWithDamping:0.5 initialSpringVelocity:2.5 fromValue:@(0) toValue:@(1 - self.scaleRatio)];
-    anim.delegate = self;
+    CAKeyframeAnimation *anim = [[KYSpringLayerAnimation sharedAnimManager]createSpringAnima:@"factor2" duration:[self.durations[1] floatValue] usingSpringWithDamping:0.5 initialSpringVelocity:2.5 fromValue:@(0) toValue:@(1 - self.scaleRatio)];
     self.factor2 = 1 - self.scaleRatio;
     [self addAnimation:anim forKey:@"restoreAnimation"];
 }

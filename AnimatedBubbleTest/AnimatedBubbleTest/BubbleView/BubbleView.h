@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BubbleLayer.h"
 
 @interface BubbleView : UIView
 
 @property (nonatomic,assign) CGPoint desPoint;
+@property (nonatomic,strong) BubbleLayer *bubbleLayer;
 
 @end
 
